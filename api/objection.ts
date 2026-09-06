@@ -1,11 +1,11 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { randomUUID } from 'node:crypto';
-import { openai, MODEL, tuning, isFlaggedInput } from './_shared/openai';
-import { ObjectionRequest, objectionSchema } from './_shared/schemas';
-import { coerceEmotion } from './_shared/emotions';
-import { objectionSystemPrompt, topicMessage } from './_shared/prompts';
-import { checkRate, assertSpendOk, recordSpend } from './_shared/guard';
-import { jsonError, clientIp, applyCors, handleOptions } from './_shared/http';
+import { openai, MODEL, tuning, isFlaggedInput } from './_shared/openai.js';
+import { ObjectionRequest, objectionSchema } from './_shared/schemas.js';
+import { coerceEmotion } from './_shared/emotions.js';
+import { objectionSystemPrompt, topicMessage } from './_shared/prompts.js';
+import { checkRate, assertSpendOk, recordSpend } from './_shared/guard.js';
+import { jsonError, clientIp, applyCors, handleOptions } from './_shared/http.js';
 
 export const config = { runtime: 'nodejs' };
 

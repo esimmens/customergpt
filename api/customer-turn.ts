@@ -1,11 +1,11 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { openai, MODEL, tuning } from './_shared/openai';
-import { TurnRequest, customerTurnSchema } from './_shared/schemas';
-import { coerceEmotion, type Emotion } from './_shared/emotions';
-import { customerSystemPrompt, closingSystemPrompt } from './_shared/prompts';
-import { checkRate, assertSpendOk, recordSpend } from './_shared/guard';
-import { jsonError, clientIp, applyCors, handleOptions } from './_shared/http';
-import { decodeReply } from './_shared/sse';
+import { openai, MODEL, tuning } from './_shared/openai.js';
+import { TurnRequest, customerTurnSchema } from './_shared/schemas.js';
+import { coerceEmotion, type Emotion } from './_shared/emotions.js';
+import { customerSystemPrompt, closingSystemPrompt } from './_shared/prompts.js';
+import { checkRate, assertSpendOk, recordSpend } from './_shared/guard.js';
+import { jsonError, clientIp, applyCors, handleOptions } from './_shared/http.js';
+import { decodeReply } from './_shared/sse.js';
 
 export const config = { runtime: 'nodejs', maxDuration: 60 };
 

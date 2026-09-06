@@ -1,9 +1,9 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { openai, MODEL, tuning } from './_shared/openai';
-import { FeedbackRequest, feedbackSchema } from './_shared/schemas';
-import { feedbackSystemPrompt, fenced } from './_shared/prompts';
-import { checkRate, assertSpendOk, recordSpend } from './_shared/guard';
-import { jsonError, clientIp, applyCors, handleOptions } from './_shared/http';
+import { openai, MODEL, tuning } from './_shared/openai.js';
+import { FeedbackRequest, feedbackSchema } from './_shared/schemas.js';
+import { feedbackSystemPrompt, fenced } from './_shared/prompts.js';
+import { checkRate, assertSpendOk, recordSpend } from './_shared/guard.js';
+import { jsonError, clientIp, applyCors, handleOptions } from './_shared/http.js';
 
 export const config = { runtime: 'nodejs' };
 

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { EMOTIONS } from './emotions';
+import { EMOTIONS } from './emotions.js';
 
 // ── Input validation (Zod) — the INPUT contract ──
 // .trim() runs before .min(1) so whitespace-only input is rejected (it otherwise

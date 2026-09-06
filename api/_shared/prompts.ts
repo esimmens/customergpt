@@ -1,4 +1,4 @@
-import { EMOTIONS } from './emotions';
+import { EMOTIONS } from './emotions.js';
 
 // One system prompt per call. The customer persona is FORMATIVE-coaching aware:
 // the score is a deliberately rough read for reflection, not a graded assessment.

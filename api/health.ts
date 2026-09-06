@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { jsonError } from './_shared/http';
+import { jsonError } from './_shared/http.js';
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   // Match the other routes' method contract instead of answering any verb.
