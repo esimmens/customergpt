@@ -7,7 +7,7 @@ import { checkRate, assertSpendOk, recordSpend } from './_shared/guard';
 import { jsonError, clientIp, applyCors, handleOptions } from './_shared/http';
 import { decodeReply } from './_shared/sse';
 
-export const config = { runtime: 'nodejs20.x', maxDuration: 60 };
+export const config = { runtime: 'nodejs', maxDuration: 60 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (handleOptions(req, res)) return;

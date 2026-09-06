@@ -7,7 +7,7 @@ import { objectionSystemPrompt, topicMessage } from './_shared/prompts';
 import { checkRate, assertSpendOk, recordSpend } from './_shared/guard';
 import { jsonError, clientIp, applyCors, handleOptions } from './_shared/http';
 
-export const config = { runtime: 'nodejs20.x' };
+export const config = { runtime: 'nodejs' };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (handleOptions(req, res)) return;

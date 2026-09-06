@@ -5,7 +5,7 @@ import { feedbackSystemPrompt, fenced } from './_shared/prompts';
 import { checkRate, assertSpendOk, recordSpend } from './_shared/guard';
 import { jsonError, clientIp, applyCors, handleOptions } from './_shared/http';
 
-export const config = { runtime: 'nodejs20.x' };
+export const config = { runtime: 'nodejs' };
 
 const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, Math.round(n || 0)));
 
