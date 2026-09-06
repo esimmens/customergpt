@@ -1,0 +1,42 @@
+{
+  "id": "tesla-too-expensive",
+  "label": "Tesla Model S — \"Too expensive\"",
+  "product": "Tesla Model S",
+  "objectionType": "Too expensive",
+  "objection": "Forty grand more than a comparable sedan is a lot. I'm just not sure the Model S is worth that kind of premium for me.",
+  "openingEmotion": "SKEPTICISM",
+  "exchanges": [
+    {
+      "rep": "I hear you. Let's look at the total cost over seven years instead of the sticker price — the fuel and maintenance savings on the Model S are substantial.",
+      "emotion": "INTEREST",
+      "reply": "I understand that long-term savings are important, but I'm worried that maintenance and repair costs for such a high-end vehicle could be a lot. How do those costs compare to other electric vehicles?"
+    },
+    {
+      "rep": "EVs have far fewer moving parts — no oil changes, and regenerative braking saves the brake pads. The battery and drivetrain are also covered by an eight-year warranty.",
+      "emotion": "CONCERN",
+      "reply": "Warranties sound reassuring, but I'm still worried about what happens after those warranties expire. Are the repair costs still manageable, or do they skyrocket?"
+    },
+    {
+      "rep": "Repair costs can be higher than average if a major component needs replacing after the warranty. What many buyers don't consider is that there are relatively few major repairs during the years they own the car.",
+      "emotion": "NEUTRAL",
+      "reply": "That's fair. I'd want to weigh the overall value and running costs against other vehicles before I commit to something at this price."
+    },
+    {
+      "rep": "Completely reasonable. I can put together a seven-year total-cost comparison — fuel, maintenance, and tax incentives — so you can see it side by side with a gas sedan.",
+      "emotion": "INTEREST",
+      "reply": "That comparison would really help. I'll be honest — I'm interested, but the upfront price is still a big commitment for our budget right now."
+    },
+    {
+      "rep": "Of course — take your time. I'll email that comparison along with a couple of owner references you can reach out to directly.",
+      "emotion": "SKEPTICISM",
+      "reply": "I appreciate the detailed information you've provided about the Tesla Model S. I need some time to reflect on everything and discuss it with my family before making any decisions."
+    }
+  ],
+  "feedback": {
+    "performance": "You demonstrated a good understanding of the customer's concerns regarding the cost of the Tesla Model S. However, your responses could further emphasize the overall value and long-term savings to better justify the higher upfront cost.",
+    "key_strengths": "You showed empathy by acknowledging the customer's budget concerns and provided useful information regarding lower maintenance costs associated with the Model S. Your ability to articulate the benefits of warranties was also helpful in addressing the customer's worries about potential repair costs.",
+    "areas_to_improve": "Consider framing the discussion around the total cost of ownership and how the Model S compares to traditional vehicles, not only in terms of repairs but also fuel savings and tax incentives. This approach can create a more compelling case for the overall value of the vehicle and help justify the initial expense.",
+    "scores": { "product_knowledge": 22, "customer_understanding": 20, "objection_handling": 19, "communication": 15 },
+    "total": 76
+  }
+}

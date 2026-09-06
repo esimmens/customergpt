@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/customer-turn.ts": { "maxDuration": 60 },
+    "api/objection.ts": { "maxDuration": 30 },
+    "api/feedback.ts": { "maxDuration": 30 }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "comment": "Separate config for the serverless functions. They depend on openai, zod, @upstash/* and @vercel/node — install those (see README) before typechecking or running `vercel dev`. Kept out of the root tsconfig so the lean, replay-only frontend builds with zero server deps.",
+  "compilerOptions": {
+    "target": "ES2021",
+    "lib": ["ES2021", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": ["."]
+}

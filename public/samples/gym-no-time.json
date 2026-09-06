@@ -1,0 +1,32 @@
+{
+  "id": "gym-no-time",
+  "label": "Gym membership — \"No time\"",
+  "product": "Summit Fitness membership",
+  "objectionType": "I don't have time",
+  "objection": "Honestly, between work and the kids I barely have a free hour. A gym membership would just be money I waste because I'd never actually go.",
+  "openingEmotion": "FRUSTRATION",
+  "exchanges": [
+    {
+      "rep": "That's exactly why our members with packed schedules pick our express format — the 30-minute guided circuits are designed to be done on a lunch break or before the kids are up.",
+      "emotion": "CONFUSION",
+      "reply": "Thirty minutes sounds more realistic, but does a workout that short actually do anything? I don't want to waste even that."
+    },
+    {
+      "rep": "It does — the circuits are full-body and intensity-based, so a focused 30 minutes three times a week delivers most of the benefit people chase with longer sessions.",
+      "emotion": "INTEREST",
+      "reply": "Okay, that's reassuring. My other worry is just staying consistent. I always start strong and then life gets in the way."
+    },
+    {
+      "rep": "We pair every new member with a coach who books your first month of sessions like calendar appointments and checks in if you miss one — consistency is the whole point of the program.",
+      "emotion": "CONCERN",
+      "reply": "Honestly, that does address my biggest worry. Let me check my schedule and think it over this week before I commit to signing up."
+    }
+  ],
+  "feedback": {
+    "performance": "You did a strong job meeting a time-poor customer where they were, converting a flat 'no time' into a realistic plan. Tightening the link between the 30-minute format and their specific schedule even earlier would make the pitch land faster.",
+    "key_strengths": "You immediately reframed the time objection around a format built for busy people, then addressed the deeper fears — effectiveness and consistency — in order. Introducing coach accountability directly answered the customer's self-identified weak point.",
+    "areas_to_improve": "Get the customer to name their realistic weekly window early ('which three 30-minute slots could you protect?') so the solution feels tailored to their life rather than generic. Anchoring to their actual calendar makes the commitment feel achievable.",
+    "scores": { "product_knowledge": 20, "customer_understanding": 22, "objection_handling": 19, "communication": 17 },
+    "total": 78
+  }
+}
