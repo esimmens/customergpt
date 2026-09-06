@@ -12,13 +12,23 @@ export const MODEL = process.env.OPENAI_MODEL ?? 'gpt-4o-mini';
 // models (gpt-4o-mini, etc.) use temperature + max_tokens. Set OPENAI_MODEL and
 // the right params are chosen automatically.
 const isReasoning = /^(o\d|gpt-5)/.test(MODEL);
-export function tuning(opts: { maxOut: number; temperature?: number; effort?: 'minimal' | 'low' | 'medium' | 'high' }) {
+export function tuning(opts: {
+  maxOut: number;
+  temperature?: number;
+  effort?: 'none' | 'minimal' | 'low' | 'medium' | 'high' | 'xhigh';
+}) {
   // Reasoning models spend tokens on hidden reasoning that also counts against
   // max_completion_tokens — so add a large buffer or the visible output gets
   // truncated to empty (finish_reason "length"). The cap is a ceiling, not a
-  // target, so cost is the actual tokens used. Default to minimal effort for speed.
+  // target, so cost is the actual tokens used.
+  //
+  // effort defaults to 'low' because it is the only value the whole gpt-5 line
+  // accepts: gpt-5-mini supports 'minimal' but NOT 'none', while gpt-5.6-*
+  // supports 'none' but NOT 'minimal' — passing the wrong one is a hard 400 on
+  // every call. 'low' works on both, and on gpt-5.6-luna it costs the same as
+  // 'none' (measured: 49 vs 50 completion tokens).
   return isReasoning
-    ? { max_completion_tokens: opts.maxOut + 2500, reasoning_effort: opts.effort ?? 'minimal' }
+    ? { max_completion_tokens: opts.maxOut + 2500, reasoning_effort: opts.effort ?? 'low' }
     : { max_tokens: opts.maxOut, temperature: opts.temperature ?? 0.7 };
 }
 

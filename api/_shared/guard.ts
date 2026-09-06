@@ -61,6 +61,12 @@ const PRICES: Record<string, { in: number; out: number }> = {
   'gpt-4o': { in: 2.5, out: 10 },
   'gpt-5-nano': { in: 0.05, out: 0.4 },
   'gpt-5-mini': { in: 0.25, out: 2 },
+  // gpt-5.6 line (Sol/Terra/Luna replaced the mini tier). These MUST be listed
+  // explicitly: prefix matching would otherwise resolve 'gpt-5.6-luna' to the
+  // 'gpt-5' flagship row and overestimate spend ~7x, tripping the cap early.
+  'gpt-5.6-luna': { in: 0.2, out: 1.2 },
+  'gpt-5.6-terra': { in: 2, out: 12 },
+  'gpt-5.6-sol': { in: 5, out: 30 },
   'gpt-5': { in: 1.25, out: 10 },
 };
 // Longest matching prefix wins, so 'gpt-5-mini' beats 'gpt-5'.

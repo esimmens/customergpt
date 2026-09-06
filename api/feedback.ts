@@ -32,7 +32,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const completion = await openai.chat.completions.create({
       model: MODEL,
-      ...tuning({ maxOut: 900, temperature: 0.4, effort: 'minimal' }),
+      ...tuning({ maxOut: 900, temperature: 0.4, effort: 'low' }),
       response_format: feedbackSchema,
       messages: [
         { role: 'system', content: feedbackSystemPrompt(product, objectionType) },

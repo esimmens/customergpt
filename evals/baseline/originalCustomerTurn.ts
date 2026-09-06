@@ -72,7 +72,7 @@ export async function customerTurnOriginal(
   const system = turn >= 5 ? originalClosingSystemPrompt(product, objectionType) : originalCustomerSystemPrompt(product, objectionType);
   const r = await openai.chat.completions.create({
     model: MODEL,
-    ...tuning({ maxOut: 300, temperature: 0.8, effort: 'minimal' }),
+    ...tuning({ maxOut: 300, temperature: 0.8, effort: 'low' }),
     response_format: ORIGINAL_CUSTOMER_TURN_SCHEMA as any,
     messages: [{ role: 'system', content: system }, ...messages],
   });

@@ -22,9 +22,17 @@ const isReasoning = /^(o\d|gpt-5)/.test(MODEL);
 export const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // The original `tuning()` helper (one knob, two model families).
-export function tuning(opts: { maxOut: number; temperature?: number; effort?: 'minimal' | 'low' | 'medium' | 'high' }) {
+// NOTE: `reasoning_effort` is infrastructure, not prompt content — the frozen
+// ORIGINAL prompts are untouched. It defaults to 'low' because that is the only
+// value the whole gpt-5 line accepts (gpt-5-mini rejects 'none'; gpt-5.6-* reject
+// 'minimal'), so the baseline keeps running as you change OPENAI_MODEL.
+export function tuning(opts: {
+  maxOut: number;
+  temperature?: number;
+  effort?: 'none' | 'minimal' | 'low' | 'medium' | 'high' | 'xhigh';
+}) {
   return isReasoning
-    ? { max_completion_tokens: opts.maxOut + 2500, reasoning_effort: opts.effort ?? 'minimal' }
+    ? { max_completion_tokens: opts.maxOut + 2500, reasoning_effort: opts.effort ?? 'low' }
     : { max_tokens: opts.maxOut, temperature: opts.temperature ?? 0.7 };
 }
 

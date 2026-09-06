@@ -72,7 +72,7 @@ export const ORIGINAL_FEEDBACK_SCHEMA = {
 export async function scoreOriginal(product: string, objectionType: string, messages: Msg[]): Promise<Feedback> {
   const r = await openai.chat.completions.create({
     model: MODEL,
-    ...tuning({ maxOut: 900, temperature: 0.4, effort: 'minimal' }),
+    ...tuning({ maxOut: 900, temperature: 0.4, effort: 'low' }),
     response_format: ORIGINAL_FEEDBACK_SCHEMA as any,
     messages: [
       { role: 'system', content: originalFeedbackSystemPrompt(product, objectionType) },

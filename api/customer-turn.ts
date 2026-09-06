@@ -58,7 +58,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         model: MODEL,
         stream: true,
         stream_options: { include_usage: true },
-        ...tuning({ maxOut: 300, temperature: 0.8, effort: 'minimal' }),
+        ...tuning({ maxOut: 300, temperature: 0.8, effort: 'low' }),
         response_format: customerTurnSchema,
         messages: [
           { role: 'system', content: turn >= 5 ? closingSystemPrompt(product, objectionType) : customerSystemPrompt(product, objectionType) },
