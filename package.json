@@ -13,6 +13,8 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.4",
     "openai": "^6.42.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -22,10 +24,11 @@
     "@types/node": "^20.14.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@vercel/node": "^12.0.1",
     "@vitejs/plugin-react": "^4.3.1",
     "typescript": "^5.5.3",
     "vite": "^5.3.4",
     "vitest": "^2.0.4"
   },
-  "comment-on-deps": "Live serverless mode (npm run dev:live / deploy) also needs: openai, zod, @upstash/ratelimit, @upstash/redis, @vercel/node. They are intentionally NOT in dependencies so 'npm install && npm run dev' stays lean and replay-only. Add them when you wire live mode: npm i openai zod @upstash/ratelimit @upstash/redis && npm i -D @vercel/node"
+  "comment-on-deps": "@upstash/ratelimit and @upstash/redis are BUILD-time requirements even though they are only used at runtime when UPSTASH_* env vars are set: guard.ts reaches them via dynamic import, and a bundler must resolve every reachable import to build the serverless functions — omitting them fails the Vercel build with 'Could not resolve'. @vercel/node is type-only (erased at build) but keeps `tsc -p api` honest."
 }
