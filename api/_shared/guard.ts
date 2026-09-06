@@ -50,7 +50,16 @@ export async function checkRate(ip: string) {
 // Rough monthly spend counter. Increment by estimated USD after each call; check
 // before each call. Uses Redis if present, else a process-local number.
 let memSpend = 0;
-const CAP = Number(process.env.MONTHLY_USD_CAP ?? '5');
+
+// `??` only falls back on undefined/null — NOT on an empty string. A dashboard
+// env var that exists but is blank yields Number('') === 0, which caps spend at
+// $0 and bricks live mode with a misleading "out of budget" error before a single
+// cent is spent. Parse defensively: anything non-finite or <= 0 uses the default.
+export function resolveCap(raw: string | undefined, fallback = 5): number {
+  const n = Number(raw);
+  return Number.isFinite(n) && n > 0 ? n : fallback;
+}
+const CAP = resolveCap(process.env.MONTHLY_USD_CAP);
 
 // Approx prices ($/1M tokens), keyed by model prefix. completion_tokens already
 // includes a reasoning model's hidden reasoning tokens, and those bill at the
