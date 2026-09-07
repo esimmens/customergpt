@@ -1,5 +1,5 @@
 {
-  "comment": "Separate config for the serverless functions. They depend on openai, zod, @upstash/* and @vercel/node — install those (see README) before typechecking or running `vercel dev`. Kept out of the root tsconfig so the lean, replay-only frontend builds with zero server deps.",
+  "comment": "Separate config for the serverless functions. They depend on openai, zod, @upstash/* and @vercel/node, all in package.json dependencies, so `npm install` covers them. Kept out of the root tsconfig so the lean, replay-only frontend builds with zero server deps. `npm run lint` runs this config too.",
   "compilerOptions": {
     "target": "ES2021",
     "lib": ["ES2021", "DOM"],

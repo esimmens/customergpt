@@ -9,7 +9,7 @@
     "dev:live": "vercel dev",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "lint": "tsc --noEmit",
+    "lint": "tsc --noEmit && tsc -p api",
     "test": "vitest run"
   },
   "dependencies": {
