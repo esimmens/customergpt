@@ -1,104 +1,195 @@
-# CustomerGPT — AI-generated sales-objection roleplay, at scale
+# CustomerGPT — AI-generated sales-objection practice
 
-> Sales-enablement teams hand-author one roleplay scenario for every product their
-> reps sell. That doesn't scale. CustomerGPT generates a full, working
-> objection-handling simulation from any `{ product, objection }` in seconds — so an
-> instructional designer authors the **engine once** instead of a scenario every time.
+**Live demo:** https://customergpt-nu.vercel.app
 
-A rep types a product and an objection, then practices against a live AI customer
-that reacts with emotion turn by turn. At the end, an AI coach gives formative
-feedback and a rough "Persuasion Power" read against a weighted rubric.
+> CustomerGPT turns any `{ product, objection }` into an interactive sales roleplay. Instead of authoring a separate simulation for every scenario, an instructional designer builds the simulation engine once and lets AI generate the conversation at runtime.
 
-> Built originally as a Storyline proof-of-concept for a sales-enablement training
-> team; rebuilt here as a React + serverless app.
+A sales rep enters a product and objection, responds in their own words, and practices against an AI customer that reacts turn by turn. After the conversation, an AI coach provides formative feedback using a weighted sales rubric.
 
-## Try it in 10 seconds
+Originally built as an Articulate Storyline proof of concept for a sales-enablement training team; rebuilt here as a React + serverless app.
 
-- **Live demo:** _<your-vercel-url>_ — lands on a one-click "Watch a sample" so you
-  see the whole flow with zero cost. Or type any product + objection to generate a live one.
-- **60–90s video:** _<link>_ — generates three different scenarios back-to-back, then
-  one full streamed conversation and the feedback dial.
+---
 
-## Run it locally
+## The problem
 
-```bash
-npm install
-npm run dev          # http://localhost:5173 — replay mode, NO key needed
+Traditional branching simulations work well when the number of scenarios is small. But as products, objections, and learner responses multiply, authoring each path by hand becomes difficult to maintain.
+
+CustomerGPT replaces that model with a reusable generative system:
+
+```text
+{ product, objection }
+        ↓
+AI simulation engine
+        ↓
+customer conversation
+        ↓
+AI coaching feedback
 ```
 
-Replay mode plays bundled sample sessions and works fully offline. For live
-generation — no Vercel CLI needed, the same `npm run dev` serves the `/api`
-handlers via a Vite dev plugin:
+Unlike most elearning exercises, the learner is not selecting from predefined responses. The customer reacts to the evolving conversation.
 
-```bash
-npm i openai zod                # live deps (Upstash optional, for a durable spend cap)
-cp .env.example .env.local      # add your OPENAI_API_KEY
-npm run dev                     # SPA + /api on http://localhost:5173
-```
+---
 
-(`npm run dev:live` runs the real Vercel runtime via `vercel dev` instead, if you
-want to mirror the production deploy exactly. Production on Vercel uses the same
-`api/*.ts` handlers — the dev plugin just serves them locally.)
+## Key design decisions
 
-## The problem and the users
+| Original prototype                           | Rebuild                               | Why                                                  |
+| -------------------------------------------- | ------------------------------------- | ---------------------------------------------------- |
+| Articulate Storyline + 32 global variables   | React, Vite, TypeScript + typed state | Easier to test, extend, and review                   |
+| Model output parsed with custom delimiters   | OpenAI Structured Outputs             | Predictable typed responses instead of parsing prose |
+| Dialogue reconstructed with string templates | Real `messages[]` history             | Preserves multi-turn context                         |
+| Client-side model access                     | Server-side API routes                | Keeps credentials out of the browser                 |
 
-- **Author / buyer:** the instructional designer or enablement lead. Their pain is
-  authoring *at scale* — a scenario per product per objection doesn't fit a real catalog.
-- **End user:** the sales rep, practicing a hard objection before a real call.
-- **Old build:** an Articulate Storyline course + Heroku proxies that scraped the
-  model's output with fragile in-band delimiters (`@ ~ ^ |`). One scenario was one
-  hand-build.
+A few additional choices were intentional:
 
-## What changed, and why (the decisions)
+* **Streaming:** customer text arrives progressively so the interaction feels responsive.
+* **Emotion metadata first:** the character expression updates before the response finishes rendering.
+* **Client-side score calculation:** the model returns rubric sub-scores; the application calculates the weighted total itself.
 
-| Then (Storyline) | Now (this repo) | Why |
-|---|---|---|
-| Authoring tool, 32 global variables | React (Vite + TS), a typed state machine | Reviewable, testable, real product code |
-| Heroku + delimiter scraping | Serverless + OpenAI Structured Outputs (`strict` json_schema) | No regex, no leaked markers — the model returns typed objects |
-| Dialogue rebuilt by string templating | A real `messages[]` array (system + alternating turns) | Correct multi-turn context; "stay in character" is structural |
-| Key in client JS (a leaked `sk-…`) | Key server-side only, in an env var | The whole point of the proxy |
-| Demo on free Heroku dynos | Vercel + a zero-cost replay fallback | A reviewer always sees it work |
+---
 
 ## Architecture
 
-![architecture](docs/architecture.svg)
+Three serverless routes handle the AI workflow:
 
-Three serverless routes hold the key and call OpenAI:
+### `POST /api/objection`
 
-- `POST /api/objection` — one-shot, returns the opening objection + emotion.
-- `POST /api/customer-turn` — **SSE stream**; emits `meta` (emotion first), then
-  `token` deltas, then `done`. The emotion drives the character expression the
-  instant the bubble starts filling.
-- `POST /api/feedback` — one-shot rubric: four sub-scores + a recomputed total.
+Generates the opening customer objection and emotional state.
 
-Model: `gpt-4o-mini` by default — fast, cheap, no reasoning latency. The model
-layer is one knob: set `OPENAI_MODEL` to a `gpt-5*` id and the handlers
-automatically switch to reasoning params (`max_completion_tokens` +
-`reasoning_effort`); classic models use `temperature` + `max_tokens`.
+### `POST /api/customer-turn`
 
-Demo protection: a per-IP rate limit, a hard monthly USD spend cap (Upstash Redis,
-with an in-memory fallback), and the client-side sample-replay path as the default.
+Streams the customer's next response with Server-Sent Events:
 
-## The feedback is formative coaching, not a grade
+```text
+meta → token → token → ... → done
+```
 
-The dial reads "Lost sale → Conversion." The rubric weights — Product Knowledge 30,
-Customer Understanding 25, Objection Handling 25, Communication 20 — are a deliberate,
-documented design choice. The score is an intentionally rough read to prompt
-reflection; the four sub-scores are shown so the number is explainable, and the
-client recomputes the total from them so model arithmetic can't desync the dial.
+The `meta` event contains the customer's emotion, followed by streamed text deltas.
 
-## Add your art
+### `POST /api/feedback`
 
-Drop your exported Storyline poses into `public/characters/` as
-`presenter.png` and one file per emotion (`skepticism.png`, `interest.png`, …,
-`neutral.png`). Until then the app shows a labeled placeholder so it still runs.
+Receives the completed conversation and returns structured coaching feedback and four rubric scores.
 
-## What I'd do next
+The model is configurable with:
 
-- An author dashboard to save and share generated scenarios — the real "at scale" surface.
-- A small eval harness on the feedback rubric (scoring consistency + on-topic checks).
-- Voice mode, branching difficulty, and analytics on which objections reps fail most.
+```text
+OPENAI_MODEL
+```
+
+The default is `gpt-5.6-luna`; set `OPENAI_MODEL` to move to a newer one. The app
+targets reasoning models only, so there is no legacy branch to maintain: these models
+take `max_completion_tokens` + `reasoning_effort` and reject `temperature` outright.
+Their hidden reasoning tokens also bill against the output ceiling, so a shared helper
+adds headroom — without it the visible response can come back empty with
+`finish_reason: "length"`.
+
+---
+
+## Feedback design
+
+The final screen includes an overall indicator of persuasiveness plus four rubric dimensions:
+
+| Dimension              | Weight |
+| ---------------------- | -----: |
+| Product Knowledge      |    30% |
+| Customer Understanding |    25% |
+| Objection Handling     |    25% |
+| Communication          |    20% |
+
+The score is intended as formative coaching.
+
+The model returns the four sub-scores and qualitative feedback. The application then calculates the weighted total, keeping the overall result consistent with the visible components.
+
+### Why BARS
+
+Each dimension is scored against a **behaviorally anchored rating scale (BARS)** rather than a bare numeric range. Every band carries a written description of what performance at that level actually looks like, so the model matches observed behavior to an anchor instead of choosing a number in the abstract.
+
+This replaced a flat rubric after measuring both against a fixed set of transcripts: strong, weak, and deliberately lopsided ones (heavy on product facts but deaf to the customer's stated worry, and the reverse). The anchored version pushed strong and weak conversations further apart and cut correlation between the four dimensions from 0.76 to 0.61 — less halo effect, where a single good impression lifts every score at once.
+
+---
+
+## Demo safeguards
+
+The public demo includes:
+
+* per-IP rate limiting, plus a global ceiling across all callers
+* Upstash Redis for a limit that survives cold starts
+* an in-memory local fallback
+* bundled replay sessions
+
+Spending is capped by a hard usage limit on the OpenAI account rather than by an
+in-app counter, which is authoritative and can't drift from real billing.
+
+Replay mode is available without an API key and works offline.
+
+---
+
+## Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+Open:
+
+```text
+http://localhost:5173
+```
+
+For live generation:
+
+```bash
+cp .env.example .env.local
+```
+
+Add `OPENAI_API_KEY` to `.env.local`, then run:
+
+```bash
+npm run dev
+```
+
+The Vite development server serves both the SPA and local `/api` handlers.
+
+To run against the Vercel development runtime instead:
+
+```bash
+npm run dev:live
+```
+
+---
+
+## What I'd build next
+
+### Retrieval-augmented product knowledge
+
+Add a RAG layer so simulations can use an organization's actual sales and product material as context, such as:
+
+* product documentation
+* competitor comparisons
+* FAQs
+
+This would let the simulated customer respond with product-specific context and give the coaching model a stronger basis for evaluating whether a rep's claims were accurate.
+
+### Evals
+
+Build an evaluation harness for the coaching layer, focusing on:
+
+* scoring consistency
+* alignment with rubric definitions
+* sensitivity to stronger and weaker responses
+* hallucinated or unsupported feedback.
+
+### Learning analytics
+
+Aggregate practice data to identify:
+
+* objections reps struggle with most
+* products associated with weaker product-knowledge scores
+* recurring communication or objection-handling weaknesses
+* improvement across repeated attempts
+
+---
 
 ## Stack
 
-React · Vite · TypeScript · Vercel serverless · OpenAI (Structured Outputs) · Zod · Vitest
+React · Vite · TypeScript · Vercel Serverless · OpenAI API · Structured Outputs · Zod · Vitest
