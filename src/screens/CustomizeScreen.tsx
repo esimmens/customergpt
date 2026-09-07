@@ -35,7 +35,7 @@ export function CustomizeScreen({
         />
       </div>
       <div className="screen__panel">
-        <h1 className="screen__title">Let's customize the exercise</h1>
+        <h1 className="screen__title">Set up your practice scenario</h1>
 
         {error && (
           <div className="error-bar" role="alert" style={{ marginBottom: '16px' }}>
@@ -44,12 +44,12 @@ export function CustomizeScreen({
         )}
 
         <label className="field">
-          <span className="field__label">Describe the product or service you're selling</span>
+          <span className="field__label">What product or service are you selling?</span>
           <input value={product} onChange={(e) => setProduct(e.target.value)} onKeyDown={onFieldKeyDown} placeholder="e.g. Solar panels" maxLength={100} />
         </label>
 
         <label className="field">
-          <span className="field__label">Identify a challenging customer objection you encounter</span>
+          <span className="field__label">What customer objection do you want to practice?</span>
           <input
             value={objectionType}
             onChange={(e) => setObjectionType(e.target.value)}
@@ -60,7 +60,7 @@ export function CustomizeScreen({
         </label>
 
         <button className="btn btn--primary btn--block" disabled={!canLive} onClick={submitLive}>
-          Generate a live scenario
+          Generate Scenario
         </button>
 
         <div className="divider"><span>or, see an example</span></div>

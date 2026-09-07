@@ -68,6 +68,11 @@ body { margin: 0; background: #0e0f11; color: var(--text); }
 .screen__panel { flex: 1; color: #fff; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
 .screen__title { font-size: 30px; font-weight: 800; margin: 0 0 24px; line-height: 1.1; }
 
+/* ── welcome / title screen (screen 1: orientation only, no setup) ── */
+.screen__title--hero { font-size: 34px; margin-bottom: 18px; }
+.welcome__lead { margin: 0 0 14px; font-size: 18px; line-height: 1.55; color: #fff; }
+.welcome__sub { margin: 0 0 30px; font-size: 16px; line-height: 1.55; color: #d5dde6; }
+
 .divider { display: flex; align-items: center; gap: 12px; color: #8b929b; margin: 18px 0; font-size: 13px; }
 .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #3a3e45; }
 .sample-row { display: flex; gap: 10px; }

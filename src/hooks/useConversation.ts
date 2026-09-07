@@ -3,7 +3,7 @@ import { DEFAULT_EMOTION, type Emotion } from '../lib/emotions';
 import type { Feedback, Message, Sample, TurnHandlers } from '../lib/types';
 import { generateFeedback, generateObjection, loadSample, replayTurn, streamTurn } from '../lib/api';
 
-export type Phase = 'customize' | 'loading' | 'conversation' | 'feedback';
+export type Phase = 'welcome' | 'customize' | 'loading' | 'conversation' | 'feedback';
 export type Mode = 'live' | 'replay';
 export interface Line {
   role: 'customer' | 'rep';
@@ -32,7 +32,7 @@ interface State {
 const MAX_TURNS = 5;
 
 export const initial: State = {
-  phase: 'customize',
+  phase: 'welcome',
   mode: 'replay',
   product: '',
   objectionType: '',
@@ -49,6 +49,7 @@ export const initial: State = {
 };
 
 type Action =
+  | { t: 'BEGIN' }
   | { t: 'LOADING'; product: string; objectionType: string; mode: Mode }
   | { t: 'CONVERSATION'; sessionId: string | null; objection: string; emotion: Emotion }
   | { t: 'REP_SENT'; text: string; ending: boolean }
@@ -65,6 +66,8 @@ type Action =
 
 export function reducer(s: State, a: Action): State {
   switch (a.t) {
+    case 'BEGIN':
+      return { ...s, phase: 'customize' };
     case 'LOADING':
       return { ...initial, phase: 'loading', loadingLabel: 'Generating the scenario…', mode: a.mode, product: a.product, objectionType: a.objectionType };
     case 'SCORING':
@@ -133,7 +136,9 @@ export function reducer(s: State, a: Action): State {
     case 'CLEAR_ERROR':
       return { ...s, error: undefined };
     case 'RESET':
-      return initial;
+      // Back to SETUP, not the welcome screen — the intro is first-run orientation,
+      // not something to re-read every time you start another scenario.
+      return { ...initial, phase: 'customize' };
   }
 }
 
@@ -251,6 +256,8 @@ export function useConversation() {
     }
   }, [state.mode, state.sessionId, state.messages, state.product, state.objectionType]);
 
+  const begin = useCallback(() => dispatch({ t: 'BEGIN' }), []);
+
   const reset = useCallback(() => {
     cancelInFlight(); // stop any in-flight typewriter / live stream before resetting
     sampleRef.current = null;
@@ -266,6 +273,7 @@ export function useConversation() {
     maxTurns: MAX_TURNS,
     isEnding: state.ending,
     canFeedback: state.finalTurn && !state.streaming,
+    begin,
     start,
     sendRep,
     requestFeedback,

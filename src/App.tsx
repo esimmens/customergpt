@@ -1,3 +1,4 @@
+import { WelcomeScreen } from './screens/WelcomeScreen';
 import { CustomizeScreen } from './screens/CustomizeScreen';
 import { LoadingScreen } from './screens/LoadingScreen';
 import { ConversationScreen } from './screens/ConversationScreen';
@@ -7,13 +8,19 @@ import { useConversation } from './hooks/useConversation';
 
 export default function App() {
   const conv = useConversation();
-  const { state, start, reset } = conv;
+  const { state, begin, start, reset } = conv;
+
+  // The replay banner belongs to an in-progress sample run — not to the intro or
+  // the setup screen (mode defaults to 'replay', so both must be excluded).
+  const showReplayBanner =
+    state.mode === 'replay' && state.phase !== 'welcome' && state.phase !== 'customize';
 
   return (
     <div className="app">
       <div className="stage">
-        {state.mode === 'replay' && state.phase !== 'customize' && <ReplayBanner onRunLive={reset} dimmed={state.ending} />}
+        {showReplayBanner && <ReplayBanner onRunLive={reset} dimmed={state.ending} />}
 
+        {state.phase === 'welcome' && <WelcomeScreen onBegin={begin} />}
         {state.phase === 'customize' && <CustomizeScreen onStart={start} error={state.error?.message} />}
         {state.phase === 'loading' && <LoadingScreen label={state.loadingLabel} />}
         {state.phase === 'conversation' && <ConversationScreen conv={conv} />}
