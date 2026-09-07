@@ -3,30 +3,35 @@
   "label": "Gym membership — \"No time\"",
   "product": "Summit Fitness membership",
   "objectionType": "I don't have time",
-  "objection": "Honestly, between work and the kids I barely have a free hour. A gym membership would just be money I waste because I'd never actually go.",
+  "objection": "Honestly, between work and the kids, I barely have any free time. I feel like I'd sign up for a gym membership and then never actually make it there.",
   "openingEmotion": "FRUSTRATION",
   "exchanges": [
     {
-      "rep": "That's exactly why our members with packed schedules pick our express format — the 30-minute guided circuits are designed to be done on a lunch break or before the kids are up.",
+      "rep": "I hear that a lot from people with packed schedules. That's actually why we offer 30-minute guided circuits — you can get a full workout in without having to carve out an hour or two.",
       "emotion": "CONFUSION",
-      "reply": "Thirty minutes sounds more realistic, but does a workout that short actually do anything? I don't want to waste even that."
+      "reply": "Thirty minutes sounds a lot more doable, but is that really enough time to get a worthwhile workout? I don't want to squeeze it into my day if it isn't going to make much difference."
     },
     {
-      "rep": "It does — the circuits are full-body and intensity-based, so a focused 30 minutes three times a week delivers most of the benefit people chase with longer sessions.",
+      "rep": "It can be. The circuits are full-body and designed to keep you moving the whole time, so the goal is to make those 30 minutes count. Three focused sessions a week can be much more realistic than trying to fit in long workouts.",
       "emotion": "INTEREST",
-      "reply": "Okay, that's reassuring. My other worry is just staying consistent. I always start strong and then life gets in the way."
+      "reply": "Okay, that sounds more manageable. The other problem is sticking with it. I usually start off motivated, and then work gets busy or something comes up with the kids."
     },
     {
-      "rep": "We pair every new member with a coach who books your first month of sessions like calendar appointments and checks in if you miss one — consistency is the whole point of the program.",
+      "rep": "That's exactly where the coaching piece can help. When you join, a coach helps you schedule your first month of sessions like appointments and checks in if you start missing them.",
       "emotion": "CONCERN",
-      "reply": "Honestly, that does address my biggest worry. Let me check my schedule and think it over this week before I commit to signing up."
+      "reply": "Honestly, that would help with the part I usually struggle with. I'll look at my schedule this week and see whether I can realistically make it work."
     }
   ],
   "feedback": {
-    "performance": "You did a strong job meeting a time-poor customer where they were, converting a flat 'no time' into a realistic plan. Tightening the link between the 30-minute format and their specific schedule even earlier would make the pitch land faster.",
-    "key_strengths": "You immediately reframed the time objection around a format built for busy people, then addressed the deeper fears — effectiveness and consistency — in order. Introducing coach accountability directly answered the customer's self-identified weak point.",
-    "areas_to_improve": "Get the customer to name their realistic weekly window early ('which three 30-minute slots could you protect?') so the solution feels tailored to their life rather than generic. Anchoring to their actual calendar makes the commitment feel achievable.",
-    "scores": { "product_knowledge": 20, "customer_understanding": 22, "objection_handling": 19, "communication": 17 },
+    "performance": "You did a strong job turning a broad \"I don't have time\" objection into a conversation about what might actually fit the customer's schedule. You addressed both of the customer's underlying concerns — whether a shorter workout would be effective and whether they could stay consistent. The pitch could feel even more personal if you connected the solution to their actual weekly routine.",
+    "key_strengths": "You didn't dismiss the customer's time constraint. Instead, you offered a shorter format that directly addressed it, then responded to the customer's concerns about effectiveness and consistency as they came up. The coaching support was especially relevant because it addressed the exact problem the customer said they had struggled with before.",
+    "areas_to_improve": "Ask about the customer's schedule earlier so you can make the recommendation more specific. Identifying a few realistic 30-minute windows would help the customer picture how the gym could actually fit into their life instead of leaving the solution at a general level.",
+    "scores": {
+      "product_knowledge": 20,
+      "customer_understanding": 22,
+      "objection_handling": 19,
+      "communication": 17
+    },
     "total": 78
   }
 }

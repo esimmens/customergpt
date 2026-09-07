@@ -3,35 +3,40 @@
   "label": "B2B CRM — \"We already have one\"",
   "product": "Atlas CRM (B2B sales platform)",
   "objectionType": "We already have a CRM",
-  "objection": "We've used Salesforce for years and the team finally knows it. Switching CRMs sounds like a huge disruption for not much gain.",
+  "objection": "We've been on Salesforce for years, and the team finally knows how to use it. Switching to another CRM sounds like a lot of disruption for something I'm not sure we even need.",
   "openingEmotion": "SKEPTICISM",
   "exchanges": [
     {
-      "rep": "Totally understand — a rip-and-replace is painful. Atlas isn't about replacing what works; most teams run it alongside their existing CRM and sync both ways during a phased rollout.",
+      "rep": "I get that. Replacing a system your team already knows would be a big ask. Atlas doesn't have to replace Salesforce right away — most teams start by running the two together and syncing the data while they evaluate it.",
       "emotion": "INTEREST",
-      "reply": "Okay, that's less scary than I assumed. But if it runs alongside Salesforce, what do my reps actually gain that they don't already have?"
+      "reply": "Okay, that's better than I was picturing. But if we're still using Salesforce, what would Atlas actually give my reps that they don't already have?"
     },
     {
-      "rep": "The big one is automatic activity capture — calls, emails, and meetings get logged without reps typing anything, so your pipeline data is finally complete and current.",
+      "rep": "One of the biggest differences is automatic activity capture. Calls, emails, and meetings are logged without reps having to enter everything themselves, so your pipeline stays much more complete and up to date.",
       "emotion": "CONCERN",
-      "reply": "Cleaner data would help, I'll admit. My worry is adoption — we rolled out a tool last year and half the team just ignored it. How is this different?"
+      "reply": "That would definitely help. My bigger concern is whether anyone would actually use it. We rolled out another tool last year, and half the team basically ignored it."
     },
     {
-      "rep": "Fair concern. Because Atlas works inside the inbox and calendar your reps already live in, there's no new screen to remember — adoption tends to be passive rather than forced.",
+      "rep": "That's a fair concern. Atlas works through the inbox and calendar your reps are already using, so they don't have to remember to open another system every day. A lot of the activity gets captured without them doing anything extra.",
       "emotion": "INTEREST",
-      "reply": "That makes sense. I'd want to see real adoption numbers from a team our size before I take this any further, though."
+      "reply": "That makes sense. Before I took it any further, though, I'd want to see what adoption actually looks like for a sales team about our size."
     },
     {
-      "rep": "Absolutely — I can share two case studies from teams in your headcount range, plus set up a two-week pilot with your own data so you can judge adoption directly.",
+      "rep": "Absolutely. I can send you a couple of case studies from similar-sized teams, and we can also set up a two-week pilot using your own data so you can see how people actually use it.",
       "emotion": "CONCERN",
-      "reply": "That's a fair offer. Let me loop in my team and review those case studies, and I'll get back to you on whether we run the pilot."
+      "reply": "That feels reasonable. I'll share the case studies with the team and see how everyone feels about trying the pilot."
     }
   ],
   "feedback": {
-    "performance": "You handled a tough incumbent objection well by reframing Atlas as complementary rather than a replacement, which lowered the customer's perceived risk. To strengthen further, quantify the gain earlier so the value is concrete before objections stack up.",
-    "key_strengths": "You defused the switching-cost fear immediately and listened for the real blocker — adoption — then addressed it specifically rather than generically. Offering a pilot with the customer's own data was a strong, low-risk close.",
-    "areas_to_improve": "Lead with a concrete, measurable outcome (e.g. hours saved per rep per week or pipeline accuracy lift) earlier in the conversation. Tying the 'we already have one' objection to a number the buyer cares about makes the case for a second tool far more compelling.",
-    "scores": { "product_knowledge": 24, "customer_understanding": 21, "objection_handling": 20, "communication": 16 },
+    "performance": "You handled the customer's existing-CRM objection well by showing that Atlas didn't have to mean an immediate replacement. That lowered the perceived risk and opened the door to discussing what the product could add. The conversation would be stronger if you established the business value more clearly before moving into adoption concerns.",
+    "key_strengths": "You recognized that switching systems was the customer's first concern and addressed it directly. You also picked up on the deeper issue — whether the sales team would actually use the product — and responded with a specific explanation rather than a generic promise. Offering a pilot was a good way to reduce the risk of moving forward.",
+    "areas_to_improve": "Give the customer a measurable reason to care about Atlas earlier in the conversation. For example, time saved on manual data entry or an improvement in pipeline completeness would make the value easier to weigh against the cost and effort of adding another tool.",
+    "scores": {
+      "product_knowledge": 24,
+      "customer_understanding": 21,
+      "objection_handling": 20,
+      "communication": 16
+    },
     "total": 81
   }
 }

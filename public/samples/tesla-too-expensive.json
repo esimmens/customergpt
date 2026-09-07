@@ -3,40 +3,45 @@
   "label": "Tesla Model S — \"Too expensive\"",
   "product": "Tesla Model S",
   "objectionType": "Too expensive",
-  "objection": "Forty grand more than a comparable sedan is a lot. I'm just not sure the Model S is worth that kind of premium for me.",
+  "objection": "Forty grand more than a comparable sedan is a lot. I like the Model S, but I'm having a hard time seeing how it's worth that much more.",
   "openingEmotion": "SKEPTICISM",
   "exchanges": [
     {
-      "rep": "I hear you. Let's look at the total cost over seven years instead of the sticker price — the fuel and maintenance savings on the Model S are substantial.",
+      "rep": "I understand. Rather than just looking at the sticker price, it can help to compare what you'd actually spend over several years. With the Model S, you're saving on things like gas and routine maintenance.",
       "emotion": "INTEREST",
-      "reply": "I understand that long-term savings are important, but I'm worried that maintenance and repair costs for such a high-end vehicle could be a lot. How do those costs compare to other electric vehicles?"
+      "reply": "That makes sense. I'm still wondering about repairs, though. It's an expensive car, so I assume anything that does go wrong could get pretty costly. How does that compare with other EVs?"
     },
     {
-      "rep": "EVs have far fewer moving parts — no oil changes, and regenerative braking saves the brake pads. The battery and drivetrain are also covered by an eight-year warranty.",
+      "rep": "That's a fair concern. EVs have fewer moving parts than gas cars, so there's no oil to change, and regenerative braking reduces wear on the brakes. The battery and drivetrain are also covered for eight years.",
       "emotion": "CONCERN",
-      "reply": "Warranties sound reassuring, but I'm still worried about what happens after those warranties expire. Are the repair costs still manageable, or do they skyrocket?"
+      "reply": "The warranty helps, but I'm more worried about what happens once it runs out. If something major goes wrong after that, am I looking at a huge repair bill?"
     },
     {
-      "rep": "Repair costs can be higher than average if a major component needs replacing after the warranty. What many buyers don't consider is that there are relatively few major repairs during the years they own the car.",
+      "rep": "A major out-of-warranty repair can be expensive. The other side of that is that there are fewer components that typically need regular repair or replacement, so it's worth looking at the total cost over the time you'd actually own the car.",
       "emotion": "NEUTRAL",
-      "reply": "That's fair. I'd want to weigh the overall value and running costs against other vehicles before I commit to something at this price."
+      "reply": "That's fair. I'd really need to compare the full cost with some other cars before I could feel comfortable spending this much."
     },
     {
-      "rep": "Completely reasonable. I can put together a seven-year total-cost comparison — fuel, maintenance, and tax incentives — so you can see it side by side with a gas sedan.",
+      "rep": "Absolutely. I can put together a seven-year comparison that includes fuel, maintenance, and any available tax incentives, so you can see the numbers side by side.",
       "emotion": "INTEREST",
-      "reply": "That comparison would really help. I'll be honest — I'm interested, but the upfront price is still a big commitment for our budget right now."
+      "reply": "That would help a lot. I am interested in the car — it's really just the upfront price that's hard for me to get past right now."
     },
     {
-      "rep": "Of course — take your time. I'll email that comparison along with a couple of owner references you can reach out to directly.",
+      "rep": "I understand. I'll send you the comparison along with a couple of owner references, and you can take some time to look everything over.",
       "emotion": "SKEPTICISM",
-      "reply": "I appreciate the detailed information you've provided about the Tesla Model S. I need some time to reflect on everything and discuss it with my family before making any decisions."
+      "reply": "That sounds good. I want to go through the numbers and talk it over with my family before I decide what makes sense for us."
     }
   ],
   "feedback": {
-    "performance": "You demonstrated a good understanding of the customer's concerns regarding the cost of the Tesla Model S. However, your responses could further emphasize the overall value and long-term savings to better justify the higher upfront cost.",
-    "key_strengths": "You showed empathy by acknowledging the customer's budget concerns and provided useful information regarding lower maintenance costs associated with the Model S. Your ability to articulate the benefits of warranties was also helpful in addressing the customer's worries about potential repair costs.",
-    "areas_to_improve": "Consider framing the discussion around the total cost of ownership and how the Model S compares to traditional vehicles, not only in terms of repairs but also fuel savings and tax incentives. This approach can create a more compelling case for the overall value of the vehicle and help justify the initial expense.",
-    "scores": { "product_knowledge": 22, "customer_understanding": 20, "objection_handling": 19, "communication": 15 },
+    "performance": "You did a good job taking the customer's price concern seriously instead of immediately trying to talk them out of it. You also shifted the conversation from sticker price to longer-term cost, which gave the customer a more useful way to evaluate the Model S. The conversation could have been stronger if you had made that value comparison more concrete earlier.",
+    "key_strengths": "You acknowledged the customer's budget concern and gave specific reasons the Model S may cost less to own than the sticker price suggests. You also addressed the repair concern directly instead of avoiding it, which helped build credibility.",
+    "areas_to_improve": "Bring the total-cost comparison into the conversation earlier and make it more concrete. Fuel savings, maintenance costs, incentives, and expected ownership period can all help the customer judge whether the higher upfront price is actually worth it for them.",
+    "scores": {
+      "product_knowledge": 22,
+      "customer_understanding": 20,
+      "objection_handling": 19,
+      "communication": 15
+    },
     "total": 76
   }
 }
