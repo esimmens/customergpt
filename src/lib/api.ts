@@ -48,7 +48,7 @@ async function readJson(res: Response): Promise<any> {
   } catch {
     throw {
       code: 'NO_BACKEND',
-      message: 'The live backend isn’t running. Use “Watch a sample”, or start it with `npm run dev:live` and an API key.',
+      message: 'The live backend isn’t running. Use “View demo”, or start it with `npm run dev:live` and an API key.',
     };
   }
 }
@@ -135,8 +135,8 @@ async function toError(res: Response): Promise<{ code: string; message: string }
   } catch {
     /* fall through */
   }
-  if (res.status === 429) return { code: 'RATE_LIMITED', message: 'A bit fast — give it a moment, or try “Watch a sample”.' };
-  return { code: 'NETWORK', message: 'The live backend isn’t reachable. Use “Watch a sample”, or run `npm run dev:live` with an API key.' };
+  if (res.status === 429) return { code: 'RATE_LIMITED', message: 'A bit fast — give it a moment, or try “View demo”.' };
+  return { code: 'NETWORK', message: 'The live backend isn’t reachable. Use “View demo”, or run `npm run dev:live` with an API key.' };
 }
 
 // ─────────────────────────── REPLAY mode (no network) ───────────────────────────
