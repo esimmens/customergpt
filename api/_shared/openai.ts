@@ -4,32 +4,25 @@ import OpenAI from 'openai';
 // sent to the browser and never prefixed with VITE_.
 export const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-// Default to a fast, non-reasoning mini for now (no reasoning latency).
-export const MODEL = process.env.OPENAI_MODEL ?? 'gpt-4o-mini';
+// Reasoning models only. Set OPENAI_MODEL to move to a newer one.
+export const MODEL = process.env.OPENAI_MODEL ?? 'gpt-5.6-luna';
 
-// One knob, two model families. Reasoning models (o*, gpt-5*) need
-// max_completion_tokens + reasoning_effort and reject temperature; classic chat
-// models (gpt-4o-mini, etc.) use temperature + max_tokens. Set OPENAI_MODEL and
-// the right params are chosen automatically.
-const isReasoning = /^(o\d|gpt-5)/.test(MODEL);
+// Request params for a reasoning model. These models take max_completion_tokens
+// + reasoning_effort and REJECT temperature outright, so there is nothing to
+// branch on — sampling is not a knob this app has.
 export function tuning(opts: {
   maxOut: number;
-  temperature?: number;
   effort?: 'none' | 'minimal' | 'low' | 'medium' | 'high' | 'xhigh';
 }) {
-  // Reasoning models spend tokens on hidden reasoning that also counts against
-  // max_completion_tokens — so add a large buffer or the visible output gets
-  // truncated to empty (finish_reason "length"). The cap is a ceiling, not a
-  // target, so cost is the actual tokens used.
+  // Hidden reasoning tokens also count against max_completion_tokens, so add a
+  // large buffer or the visible output is truncated to empty (finish_reason
+  // "length"). It is a ceiling, not a target — cost is the tokens actually used.
   //
-  // effort defaults to 'low' because it is the only value the whole gpt-5 line
-  // accepts: gpt-5-mini supports 'minimal' but NOT 'none', while gpt-5.6-*
-  // supports 'none' but NOT 'minimal' — passing the wrong one is a hard 400 on
-  // every call. 'low' works on both, and on gpt-5.6-luna it costs the same as
-  // 'none' (measured: 49 vs 50 completion tokens).
-  return isReasoning
-    ? { max_completion_tokens: opts.maxOut + 2500, reasoning_effort: opts.effort ?? 'low' }
-    : { max_tokens: opts.maxOut, temperature: opts.temperature ?? 0.7 };
+  // effort defaults to 'low': it is accepted across the gpt-5 line, where the
+  // cheapest value differs by model (gpt-5-mini takes 'minimal' but not 'none';
+  // gpt-5.6-* the reverse) and the wrong one is a hard 400 on every call. On
+  // gpt-5.6-luna 'low' costs the same as 'none' (measured: 49 vs 50 tokens out).
+  return { max_completion_tokens: opts.maxOut + 2500, reasoning_effort: opts.effort ?? 'low' };
 }
 
 // De-obfuscate so trivial encodings can't slip past moderation. Returns the

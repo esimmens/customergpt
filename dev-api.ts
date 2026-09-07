@@ -19,7 +19,6 @@ export function devApi(): Plugin {
       for (const key of [
         'OPENAI_API_KEY',
         'OPENAI_MODEL',
-        'MONTHLY_USD_CAP',
         'UPSTASH_REDIS_REST_URL',
         'UPSTASH_REDIS_REST_TOKEN',
         'ALLOWED_ORIGINS',

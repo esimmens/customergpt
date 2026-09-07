@@ -17,7 +17,7 @@ try {
   /* env provided some other way */
 }
 
-export const MODEL = process.env.OPENAI_MODEL ?? 'gpt-4o-mini';
+export const MODEL = process.env.OPENAI_MODEL ?? 'gpt-5.6-luna';
 const isReasoning = /^(o\d|gpt-5)/.test(MODEL);
 export const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 

@@ -6,7 +6,6 @@ const STATUS: Record<string, number> = {
   INVALID_REQUEST: 400,
   CONTENT_BLOCKED: 400,
   RATE_LIMITED: 429,
-  SPEND_CAP_REACHED: 402,
   UPSTREAM_ERROR: 502,
   UPSTREAM_TIMEOUT: 504,
 };
@@ -17,15 +16,14 @@ export function jsonError(res: VercelResponse, code: string, extra: Record<strin
   return res.status(status).json({ error: { code, message: messageFor(code), retryable, ...extra } });
 }
 
-function messageFor(code: string): string {
+export function messageFor(code: string): string {
   switch (code) {
     case 'METHOD_NOT_ALLOWED': return 'Use POST for this endpoint.';
     case 'INVALID_REQUEST': return 'That request was malformed.';
     case 'CONTENT_BLOCKED': return 'That topic can’t be used for a roleplay. Try a product and an everyday sales objection.';
     case 'RATE_LIMITED': return 'A bit fast — try again in a moment.';
-    case 'SPEND_CAP_REACHED': return 'Live demo paused for the month — switching to a sample.';
-    case 'UPSTREAM_TIMEOUT': return 'The customer took too long to respond. Try again.';
-    case 'UPSTREAM_ERROR': return 'The customer stepped away for a moment. Try again.';
+    case 'UPSTREAM_TIMEOUT': return 'The API took too long to respond. Try again.';
+    case 'UPSTREAM_ERROR': return 'There was a problem with the API. Try again.';
     default: return 'Something went wrong.';
   }
 }

@@ -3,8 +3,8 @@ import { openai, MODEL, tuning } from './_shared/openai.js';
 import { TurnRequest, customerTurnSchema } from './_shared/schemas.js';
 import { coerceEmotion, type Emotion } from './_shared/emotions.js';
 import { customerSystemPrompt, closingSystemPrompt } from './_shared/prompts.js';
-import { checkRate, assertSpendOk, recordSpend } from './_shared/guard.js';
-import { jsonError, clientIp, applyCors, handleOptions } from './_shared/http.js';
+import { checkRate } from './_shared/guard.js';
+import { jsonError, clientIp, applyCors, handleOptions, messageFor } from './_shared/http.js';
 import { decodeReply } from './_shared/sse.js';
 
 export const config = { runtime: 'nodejs', maxDuration: 60 };
@@ -20,8 +20,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const parsed = TurnRequest.safeParse(req.body);
   if (!parsed.success) return jsonError(res, 'INVALID_REQUEST', { fields: parsed.error.flatten() });
   const { product, objectionType, messages, turn } = parsed.data;
-
-  if (!(await assertSpendOk()).ok) return jsonError(res, 'SPEND_CAP_REACHED');
 
   res.writeHead(200, {
     'Content-Type': 'text/event-stream; charset=utf-8',
@@ -58,7 +56,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         model: MODEL,
         stream: true,
         stream_options: { include_usage: true },
-        ...tuning({ maxOut: 300, temperature: 0.8, effort: 'low' }),
+        ...tuning({ maxOut: 300, effort: 'low' }),
         response_format: customerTurnSchema,
         messages: [
           { role: 'system', content: turn >= 5 ? closingSystemPrompt(product, objectionType) : customerSystemPrompt(product, objectionType) },
@@ -98,7 +96,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     clearTimeout(timeout);
     if (!emotionSent) send('meta', { turn, emotion });
     const final = safeParse(buffer);
-    await recordSpend(usage);
     send('done', {
       reply: (final.reply ?? '').trim(),
       emotion: coerceEmotion(final.emotion ?? emotion),
@@ -114,7 +111,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (clientGone) return;
     console.error('[customer-turn] upstream error:', err);
     const code = err?.name === 'AbortError' ? 'UPSTREAM_TIMEOUT' : 'UPSTREAM_ERROR';
-    send('error', { code, message: 'The customer stepped away for a moment. Try again.', retryable: true });
+    send('error', { code, message: messageFor(code), retryable: true });
     res.end();
   }
 }

@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { openai, MODEL, tuning } from './_shared/openai.js';
 import { FeedbackRequest, feedbackSchema } from './_shared/schemas.js';
 import { feedbackSystemPrompt, fenced } from './_shared/prompts.js';
-import { checkRate, assertSpendOk, recordSpend } from './_shared/guard.js';
+import { checkRate } from './_shared/guard.js';
 import { jsonError, clientIp, applyCors, handleOptions } from './_shared/http.js';
 
 export const config = { runtime: 'nodejs' };
@@ -27,19 +27,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const repText = messages.filter((m) => m.role === 'user').map((m) => m.content).join(' ').replace(/\s+/g, ' ').trim();
   if (repText.length < 20) return res.status(200).json(thinTranscriptFeedback());
 
-  if (!(await assertSpendOk()).ok) return jsonError(res, 'SPEND_CAP_REACHED');
-
   try {
     const completion = await openai.chat.completions.create({
       model: MODEL,
-      ...tuning({ maxOut: 900, temperature: 0.4, effort: 'low' }),
+      ...tuning({ maxOut: 900, effort: 'low' }),
       response_format: feedbackSchema,
       messages: [
         { role: 'system', content: feedbackSystemPrompt(product, objectionType) },
         { role: 'user', content: `Assess this roleplay transcript:\n\n${fenced('TRANSCRIPT', transcript(messages))}` },
       ],
     });
-    await recordSpend(completion.usage);
     const raw = completion.choices[0]?.message?.content;
     if (!raw) throw new Error(`empty model output (finish_reason: ${completion.choices[0]?.finish_reason})`);
     const f = JSON.parse(raw);

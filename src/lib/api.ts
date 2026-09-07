@@ -135,7 +135,6 @@ async function toError(res: Response): Promise<{ code: string; message: string }
   } catch {
     /* fall through */
   }
-  if (res.status === 402) return { code: 'SPEND_CAP_REACHED', message: 'Live demo paused — try “Watch a sample”.' };
   if (res.status === 429) return { code: 'RATE_LIMITED', message: 'A bit fast — give it a moment, or try “Watch a sample”.' };
   return { code: 'NETWORK', message: 'The live backend isn’t reachable. Use “Watch a sample”, or run `npm run dev:live` with an API key.' };
 }

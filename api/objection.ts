@@ -4,7 +4,7 @@ import { openai, MODEL, tuning, isFlaggedInput } from './_shared/openai.js';
 import { ObjectionRequest, objectionSchema } from './_shared/schemas.js';
 import { coerceEmotion } from './_shared/emotions.js';
 import { objectionSystemPrompt, topicMessage } from './_shared/prompts.js';
-import { checkRate, assertSpendOk, recordSpend } from './_shared/guard.js';
+import { checkRate } from './_shared/guard.js';
 import { jsonError, clientIp, applyCors, handleOptions } from './_shared/http.js';
 
 export const config = { runtime: 'nodejs' };
@@ -26,19 +26,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // hate/etc. from being voiced as a "customer objection".
   if (await isFlaggedInput(`${product}\n${objectionType}`)) return jsonError(res, 'CONTENT_BLOCKED');
 
-  if (!(await assertSpendOk()).ok) return jsonError(res, 'SPEND_CAP_REACHED');
-
   try {
     const completion = await openai.chat.completions.create({
       model: MODEL,
-      ...tuning({ maxOut: 256, temperature: 0.7 }),
+      ...tuning({ maxOut: 256 }),
       response_format: objectionSchema,
       messages: [
         { role: 'system', content: objectionSystemPrompt() },
         { role: 'user', content: topicMessage(product, objectionType) },
       ],
     });
-    await recordSpend(completion.usage);
     const raw = completion.choices[0]?.message?.content;
     if (!raw) throw new Error(`empty model output (finish_reason: ${completion.choices[0]?.finish_reason})`);
     const data = JSON.parse(raw);

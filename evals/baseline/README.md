@@ -53,8 +53,10 @@ const user = originalUserMessage(transcript);
 
 ## Notes
 
-- **Model:** `_shared.ts` reads `OPENAI_MODEL` (defaults to `gpt-4o-mini`, as the
-  original code did). Pin it explicitly for reproducible evals.
+- **Model:** `_shared.ts` reads `OPENAI_MODEL` (defaults to `gpt-5.6-luna`, matching
+  the live app, so a baseline-vs-current run is a prompt A/B rather than a model A/B).
+  What is frozen here is the prompts, not the model. Pin it explicitly for
+  reproducible evals.
 - **Streaming:** the original customer-turn endpoint streamed over SSE; that's
   delivery-only, so `customerTurnOriginal` uses a plain completion to get the same
   final `{ emotion, reply }`.
