@@ -65,18 +65,23 @@ body { margin: 0; background: #0e0f11; color: var(--text); }
 .screen--split { min-height: 560px; background-image: url('/customize-bg.png'); background-size: cover; background-position: center; }
 .screen__art { flex: 0 0 46%; display: flex; align-items: flex-end; justify-content: center; }
 .presenter { max-height: 540px; max-width: 100%; object-fit: contain; }
-/* Only the PANEL cross-fades between the welcome and setup screens — they share
-   the same background image and presenter, so the frame stays perfectly still and
-   the white .stage never flashes through. (Both split screens use this class; the
-   conversation/feedback screens don't, so they're unaffected.) */
-.screen__panel { flex: 1; color: #fff; padding: 40px; display: flex; flex-direction: column; justify-content: center;
-  animation: panelIn 280ms ease-out both; }
-.screen__panel--leaving { animation: panelOut 200ms ease-in both; }
+.screen__panel { flex: 1; color: #fff; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+
+/* The welcome and setup screens share one frame (rendered in App), so the
+   background and presenter never unmount. Only this inner content swaps, and only
+   it animates — that keeps the character from flashing on "Get Started" and stops
+   the white .stage showing through. */
+/* No fill-mode on the fade-IN: the resting style is opacity 1, so if the animation
+   is ever paused or blocked (hidden tab, animations disabled) the content is still
+   VISIBLE rather than stuck at opacity 0. The fade is purely additive.
+   The fade-OUT keeps `forwards` so it holds at 0 until the phase actually swaps. */
+.panel__content { display: flex; flex-direction: column; width: 100%; animation: panelIn 280ms ease-out; }
+.panel__content--leaving { animation: panelOut 200ms ease-in forwards; }
 @keyframes panelIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @keyframes panelOut { from { opacity: 1; } to { opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .screen__panel, .screen__panel--leaving { animation: none; }
+  .panel__content, .panel__content--leaving { animation: none; }
 }
 .screen__title { font-size: 30px; font-weight: 800; margin: 0 0 24px; line-height: 1.1; }
 

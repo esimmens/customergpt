@@ -15,13 +15,37 @@ export default function App() {
   const showReplayBanner =
     state.mode === 'replay' && state.phase !== 'welcome' && state.phase !== 'customize';
 
+  // Welcome and setup share one frame. It is rendered HERE, once, so the
+  // background and the presenter <img> stay mounted across the transition —
+  // rendering the frame inside each screen made React tear down the image and
+  // build a new node, which flashed the character for a frame on "Get Started".
+  const isSplit = state.phase === 'welcome' || state.phase === 'customize';
+
   return (
     <div className="app">
       <div className="stage">
         {showReplayBanner && <ReplayBanner onRunLive={reset} dimmed={state.ending} />}
 
-        {state.phase === 'welcome' && <WelcomeScreen onBegin={begin} />}
-        {state.phase === 'customize' && <CustomizeScreen onStart={start} error={state.error?.message} />}
+        {isSplit && (
+          <div className="screen screen--split">
+            <div className="screen__art">
+              <img
+                className="presenter"
+                src="/characters/presenter.png"
+                alt=""
+                onError={(e) => ((e.currentTarget.style.display = 'none'))}
+              />
+            </div>
+            <div className="screen__panel">
+              {state.phase === 'welcome' ? (
+                <WelcomeScreen onBegin={begin} />
+              ) : (
+                <CustomizeScreen onStart={start} error={state.error?.message} />
+              )}
+            </div>
+          </div>
+        )}
+
         {state.phase === 'loading' && <LoadingScreen label={state.loadingLabel} />}
         {state.phase === 'conversation' && <ConversationScreen conv={conv} />}
         {state.phase === 'feedback' && state.feedback && (
